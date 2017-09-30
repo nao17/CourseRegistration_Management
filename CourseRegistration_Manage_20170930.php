@@ -8,9 +8,22 @@ $langOther = $_POST["CreditLangOther"];
 $langC = $_POST["CreditLangAreaC"];
 $langEng = $_POST["CreditLangEnglish"];
 
-echo "//コメントが格納されたか確認する";
+
 var_dump($langMajor);
+echo "登録に成功しました。";
+echo "登録した専攻言語単位数は $langMajor";
+echo "登録した教養外国語単位数は $langOther";
+echo "登録した地域言語c単位数は $langC";
+echo "登録したGLIP単位数は $langEng";
+
+//取得数の和
+$langTotal = $langMajor + $langOther + $langC + $langEng;
+
+echo "言語単位の合計は $langTotal";
+
 }
+
+
 
  ?>
 
