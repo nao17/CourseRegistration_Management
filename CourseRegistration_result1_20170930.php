@@ -5,10 +5,11 @@
 <title>"取得単位管理システム"</title>
 </head>
 <body>
-<?php
-//遷移先のファイルで処理する
 
-/*
+<?php
+
+
+
 //htmlフォームで登録された場合
 if (isset($_POST["register"])){
 
@@ -42,28 +43,9 @@ echo "<h2>残り必要な言語単位は $langNeed</h2>";
 
 }
 
-*/
+
 
  ?>
-
-
-
-
-     <h1>累計取得単位数を登録してください</h1>
-
- <form action="CourseRegistration_result1_20170930.php" method="post">
-    専攻言語単位数: <br />
-    <input type="number" name="CreditLangMajor"><br />
-    教養外国語単位数: <br />
-    <input type="number" name="CreditLangOther"><br />
-    地域言語c単位数: <br />
-    <input type="number" name="CreditLangAreaC"><br />
-    GLIP単位数: <br />
-    <input type="number" name="CreditLangEnglish"><br />
-    <br />
-    <input type="submit" name = "register" value="Register" />
-    <br />
-</form>
 
 </body>
 </html>
