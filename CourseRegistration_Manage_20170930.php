@@ -110,6 +110,19 @@ echo "<h2>残り必要な言語単位は $langNeed</h2>";
     世界教養区分ウ: <br />
     <input type="number" name="CreditlaC"><br />
 
+    導入科目: <br />
+    <input type="number" name="CreditIntro"><br />
+    概論: <br />
+    <input type="number" name="CreditIntro2"><br />
+    選択科目 講義: <br />
+    <input type="number" name="CreditElectiveLec"><br />
+    選択科目 ゼミ: <br />
+    <input type="number" name="CreditElectiveSeminar"><br />
+    選択科目 卒論演習: <br />
+    <input type="number" name="CreditElectiveReportExe"><br />
+    選択科目 卒論: <br />
+    <input type="number" name="CreditElectiveReport"><br />
+
 <?php
 //ループだと反映されない。原因不明
 /*

@@ -15,16 +15,28 @@ var_dump($_POST["CreditlaA"]);
 
 //登録された単位数を格納する
 $facultyName = $_POST["faculty"];
+
 $langMajor = $_POST["CreditLangMajor"];
 $langOther = $_POST["CreditLangOther"];
 $langC = $_POST["CreditLangAreaC"];
 $langEng = $_POST["CreditLangEnglish"];
+
 $AreaBasis = $_POST["CreditAreaBasis"];
 $ReportBasis = $_POST["CreditReportBasis"];
 $LiteracyBasis = $_POST["CreditLiteracyBasis"];
+
 $ResultlaA = $_POST["CreditlaA"];
 $ResultlaB = $_POST["CreditlaB"];
 $ResultlaC = $_POST["CreditlaC"];
+
+$ResultIntro = $_POST["CreditIntro"];
+$ResultIntro2 = $_POST["CreditIntro2"];
+$ResultElectiveLec = $_POST["CreditElectiveLec"];
+$ResultElectiveSeminar = $_POST["CreditElectiveSeminar"];
+$ResultElectiveReportExe = $_POST["CreditElectiveReportExe"];
+$ResultElectiveReport = $_POST["CreditElectiveReport"];
+
+
   //取得単位数の配列
   //取得単位数の配列ー言語
   $CreditlangAll = array($langMajor, $langOther, $langC, $langEng);
@@ -41,22 +53,46 @@ $ResultlaC = $_POST["CreditlaC"];
     $laB = "世界教養区分イ";
     $laC = "世界教養区分ウ";
     //名前の配列
+
+
+
     $laAll = array($laA, $laB, $laC);
     $cntla = count($laAll);
+
+  $CreditIntroEleArray = array($ResultIntro, $ResultIntro2, $ResultElectiveLec, $ResultElectiveSeminar, $ResultElectiveReportExe,$ResultElectiveReport);
+   $cntIntroEle = count($CreditIntroEleArray);
+    $NameIntroEleArray = array("導入科目","概論", "選択科目 講義", "選択科目 ゼミ", "選択科目 卒論演習", "択科目 卒論");
 
 
 //卒業に必要な単位数を前もって格納
 $requirelang = 36;
+//　必要な単位数　基礎系
 $requireAreaBasis = 6;
 $requireReportBasis = 2;
 $requireLiteracyBasis = 1;
+//必要な単位数 教養
 $requirelaA = 4;
 $requirelaB = 6;
 $requirelaC = 2;
 $requirelaAll = 16;
+//選択系
+
+$reqIntro= 8;
+$reqIntro2 = 4;
+$reqElectiveLec = 18;
+$reqElectiveSeminar = 4;
+$reqElectiveReportExe= 4;
+$reqElectiveReport = 8;
+//他
+
+$reqSport = 1;
+$reqRel = 17;
   //必要単位数の配列
   $CreditReqBasisAll = array($requireAreaBasis, $requireReportBasis, $requireLiteracyBasis);
   $CreditReqlaArray = array($requirelaA, $requirelaB, $requirelaC);
+  $ReqIntroEleArray = array($reqIntro, $reqIntro2, $reqElectiveLec, $reqElectiveSeminar, $reqElectiveReportExe, $reqElectiveReport);
+
+
 //チェック
 //var_dump($CreditReqBasisAll);
 //var_dump($ResultlaA);
@@ -145,7 +181,7 @@ if ($facultyName == "国際社会学部" ) {
       echo "<tr>";
       echo "<td>". $NameBasisAll[$i]. "</td>";
       echo "<td>". $CreditReqBasisAll[$i]. "</td>";
-      if ($CreditBasisAll[$i] == $CreditReqBasisAll[$i]) {
+      if ($CreditBasisAll[$i] >= $CreditReqBasisAll[$i]) {
         # code...
         echo "<td>必要な単位数は確保されています</td>";
       }else {
@@ -218,6 +254,50 @@ if ($laTotal >= $requirelaAll) {
 }
 
  ?>
+ <?php echo "<h3>専修プログラム</h3>"; ?>
+ <table border="1">
+ <?php
+   echo "<tr>";
+   echo "<th>". "登録した専修プログラム". "</th>";
+   echo "<th>". "取得単位数". "</th>";
+   echo "</tr>";
+
+   for ($i=0; $i < $cntIntroEle; $i++) {
+     # code...
+     echo "<tr>";
+     echo "<td>". $NameIntroEleArray[$i]. "</td>";
+     echo "<td>". $CreditIntroEleArray[$i]. "</td>";
+     echo "</tr>";
+     }
+
+   ?>
+   </table>
+
+     <table border="1">
+ <?php
+ echo "<tr>";
+ echo "<th>". "登録した専修科目". "</th>";
+ echo "<th>". "必要単位数". "</th>";
+ echo "<th>". "判定". "</th>";
+ echo "</tr>";
+
+ for ($i=0; $i < $cntIntroEle; $i++) {
+   # code...
+   echo "<tr>";
+   echo "<td>". $NameIntroEleArray[$i]. "</td>";
+   echo "<td>". $ReqIntroEleArray[$i]. "</td>";
+   if ($CreditIntroEleArray[$i] >= $ReqIntroEleArray[$i]) {
+     # code...
+     echo "<td>必要な単位数は確保されています</td>";
+   }else {
+     # code...
+     echo "<td>単位数が足りません</td>";
+   }
+   echo "</tr>";
+   }
+
+ ?>
+ </table>
 <?php
 
 
