@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <<meta charset="UTF-8">
+    <meta charset="UTF-8">
 <title>"取得単位管理システム"</title>
 </head>
 <body>
@@ -103,6 +103,40 @@ echo "<h2>残り必要な言語単位は $langNeed</h2>";
     基礎リテラシー単位数: <br />
     <input type="number" name="CreditLiteracyBasis"><br />
 
+    世界教養区分ア: <br />
+    <input type="number" name="CreditlaA"><br />
+    世界教養区分イ: <br />
+    <input type="number" name="CreditlaB"><br />
+    世界教養区分ウ: <br />
+    <input type="number" name="CreditlaC"><br />
+
+<?php
+//ループだと反映されない。原因不明
+/*
+//名前を格納
+$laA = "世界教養区分ア";
+$laB = "世界教養区分イ";
+$laC = "世界教養区分ウ";
+//配列
+$laAll = array($laA, $laB, $laC);
+$cntla = count($laAll);
+//名前を格納
+$PostlaA="CreditlaA";
+$PostlaB="CreditlaB";
+$PostlaC="CreditlaC";
+//配列
+$PostlaAll = array("CreditlaA", "CreditlaB", "CreditlaC");
+for ($i=0; $i < $cntla; $i++) {
+  # code...
+  echo $laAll[$i]. "単位数: <br />";
+  echo "<input type=\"number\" name=　\"$PostlaAll[$i]\"><br />";
+var_dump($PostlaAll[$i]);
+
+}
+
+*/
+
+ ?>
 
     <br />
     <input type="submit" name = "register" value="Register" />

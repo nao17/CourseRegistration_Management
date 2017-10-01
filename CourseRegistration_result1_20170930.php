@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <<meta charset="UTF-8">
+    <meta charset="UTF-8">
 <title>"取得単位管理システム"</title>
 </head>
 <body>
   <h1>累計取得した単位数・今後必要な単位数を表示します</h1>
 <?php
 
-
-
 //htmlフォームで登録された場合
 if (isset($_POST["register"])){
 
-
+var_dump($_POST["CreditlaA"]);
 
 //登録された単位数を格納する
 $facultyName = $_POST["faculty"];
@@ -24,23 +22,46 @@ $langEng = $_POST["CreditLangEnglish"];
 $AreaBasis = $_POST["CreditAreaBasis"];
 $ReportBasis = $_POST["CreditReportBasis"];
 $LiteracyBasis = $_POST["CreditLiteracyBasis"];
-  //配列で格納
-  //言語
+$ResultlaA = $_POST["CreditlaA"];
+$ResultlaB = $_POST["CreditlaB"];
+$ResultlaC = $_POST["CreditlaC"];
+  //取得単位数の配列
+  //取得単位数の配列ー言語
   $CreditlangAll = array($langMajor, $langOther, $langC, $langEng);
-  $NamelangAll = array('専攻言語', '教養外国語', '地域言語c', 'GLIP');
-  $CountlangAll = count($CreditlangAll);
-  //基礎系
+    $NamelangAll = array('専攻言語', '教養外国語', '地域言語c', 'GLIP');
+    $CountlangAll = count($CreditlangAll);
+  //取得単位数の配列ー基礎系
   $CreditBasisAll = array($AreaBasis, $ReportBasis, $LiteracyBasis);
-  $NameBasisAll = array('地域基礎', '基礎演習', '基礎リテラシー');
-  $CountBasisAll = count($CreditBasisAll);
+    $NameBasisAll = array('地域基礎', '基礎演習', '基礎リテラシー');
+    $CountBasisAll = count($CreditBasisAll);
+  //取得単位数の配列ー世界教養
+  $CreditlaAll = array($ResultlaA, $ResultlaB, $ResultlaC);
+    //名前を格納
+    $laA = "世界教養区分ア";
+    $laB = "世界教養区分イ";
+    $laC = "世界教養区分ウ";
+    //名前の配列
+    $laAll = array($laA, $laB, $laC);
+    $cntla = count($laAll);
+
 
 //卒業に必要な単位数を前もって格納
+$requirelang = 36;
 $requireAreaBasis = 6;
 $requireReportBasis = 2;
 $requireLiteracyBasis = 1;
+$requirelaA = 4;
+$requirelaB = 6;
+$requirelaC = 2;
+$requirelaAll = 16;
+  //必要単位数の配列
+  $CreditReqBasisAll = array($requireAreaBasis, $requireReportBasis, $requireLiteracyBasis);
+  $CreditReqlaArray = array($requirelaA, $requirelaB, $requirelaC);
+//チェック
+//var_dump($CreditReqBasisAll);
+//var_dump($ResultlaA);
 
 
-var_dump($langMajor);
 
 //学部で分岐
 if ($facultyName == "国際社会学部" ) {
@@ -53,12 +74,14 @@ if ($facultyName == "国際社会学部" ) {
     登録した教養外国語単位数は $langOther<br>
     登録した地域言語c単位数は $langC<br>
     登録したGLIP単位数は $langEng<br>";*/
+    echo "<h3>言語科目</h3>";
 ?>
+
 <table border="1">
 <?php
   echo "<tr>";
   echo "<th>". "登録した言語科目". "</th>";
-  echo "<th>". "単位数". "</th>";
+  echo "<th>". "取得単位数". "</th>";
   echo "</tr>";
 
   for ($i=0; $i < $CountlangAll; $i++) {
@@ -72,7 +95,7 @@ if ($facultyName == "国際社会学部" ) {
     //取得数の和
     $langTotal = $langMajor + $langOther + $langC + $langEng;
     echo "<tr>";
-    echo "<th>". "言語単位の合計". "</th>";
+    echo "<th>". "取得した言語単位の合計". "</th>";
     echo "<th>". "$langTotal". "</th>";
     echo "</tr>";
     ?>
@@ -81,8 +104,8 @@ if ($facultyName == "国際社会学部" ) {
 <?php
 
   //残り必要単位の表示
-  $langNeed = 36 - $langTotal;
-  echo "<h2>残り必要な言語単位は $langNeed</h2>";
+  $langNeed = $requirelang - $langTotal;
+  echo "残り必要な言語単位は $langNeed<br><br>";
 //次もテスト。同じ内容がループでテーブル表示されている。
   /*echo
     "登録した地域基礎単位数は $AreaBasis<br>
@@ -90,11 +113,12 @@ if ($facultyName == "国際社会学部" ) {
     登録した基礎リテラシ-単位数は $LiteracyBasis<br>";*/
 
     ?>
+    <?php echo "<h3>基礎科目</h3>"; ?>
     <table border="1">
     <?php
       echo "<tr>";
       echo "<th>". "登録した基礎科目". "</th>";
-      echo "<th>". "単位数". "</th>";
+      echo "<th>". "取得単位数". "</th>";
       echo "</tr>";
 
       for ($i=0; $i < $CountBasisAll; $i++) {
@@ -108,37 +132,94 @@ if ($facultyName == "国際社会学部" ) {
       ?>
       </table>
 
+        <table border="1">
     <?php
+    echo "<tr>";
+    echo "<th>". "登録した基礎科目". "</th>";
+    echo "<th>". "必要単位数". "</th>";
+    echo "<th>". "判定". "</th>";
+    echo "</tr>";
 
-     if ($AreaBasis == $requireAreaBasis ) {
-       # code...
-       echo "地域基礎の必要単位数は$requireAreaBasis <br>";
-       echo "よって必要な単位数は確保されています<br>";
-     } else {
-       # code...
-       echo "地域基礎の必要単位数は$requireAreaBasis <br>";
-       echo "よって必要な単位数に足りていません<br>";
-     }
+    for ($i=0; $i < $CountBasisAll; $i++) {
+      # code...
+      echo "<tr>";
+      echo "<td>". $NameBasisAll[$i]. "</td>";
+      echo "<td>". $CreditReqBasisAll[$i]. "</td>";
+      if ($CreditBasisAll[$i] == $CreditReqBasisAll[$i]) {
+        # code...
+        echo "<td>必要な単位数は確保されています</td>";
+      }else {
+        # code...
+        echo "<td>単位数が足りません</td>";
+      }
+      echo "</tr>";
+      }
 
-     if ($ReportBasis == $requireReportBasis ) {
-       # code...
-       echo "基礎演習の必要単位数は$requireReportBasis <br>";
-       echo "よって必要な単位数は確保されています<br>";
-     } else {
-       # code...
-       echo "基礎演習の必要単位数は$requireReportBasis <br>";
-       echo "よって必要な単位数に足りていません<br>";
-     }
+    ?>
+    </table>
 
-     if ($LiteracyBasis == $requireLiteracyBasis ) {
-       # code...
-       echo "基礎リテラシーの必要単位数は$requireLiteracyBasis <br>";
-       echo "よって必要な単位数は確保されています<br>";
-     } else {
-       # code...
-       echo "基礎リテラシーの必要単位数は$requireLiteracyBasis <br>";
-       echo "よって必要な単位数に足りていません<br>";
-     }
+<?php
+echo "<br><br>";
+echo "<h3>世界教養科目</h3>"; ?>
+    <table border="1">
+    <?php
+      echo "<tr>";
+      echo "<th>". "登録した世界教養科目". "</th>";
+      echo "<th>". "取得単位数". "</th>";
+      echo "</tr>";
+
+      for ($i=0; $i < $cntla; $i++) {
+        # code...
+        echo "<tr>";
+        echo "<td>". $laAll[$i]. "</td>";
+        echo "<td>". $CreditlaAll[$i]. "</td>";
+        echo "</tr>";
+        }
+
+      ?>
+      </table>
+
+    <table border="1">
+<?php
+echo "<tr>";
+echo "<th>". "登録した世界教養科目". "</th>";
+echo "<th>". "必要単位数". "</th>";
+echo "<th>". "判定". "</th>";
+echo "</tr>";
+
+for ($i=0; $i < $cntla; $i++) {
+  # code...
+  echo "<tr>";
+  echo "<td>". $laAll[$i]. "</td>";
+  echo "<td>". $CreditReqlaArray[$i]. "</td>";
+  if ($CreditlaAll[$i] >= $CreditReqlaArray[$i]) {
+    # code...
+    echo "<td>必要な単位数は確保されています</td>";
+  }else {
+    # code...
+    echo "<td>単位数が足りません</td>";
+  }
+  echo "</tr>";
+  }
+?>
+</table>
+<?php
+$laTotal = array_sum($CreditlaAll);
+if ($laTotal >= $requirelaAll) {
+  # code...
+  echo "世界教養全体では". $requirelaAll. "の単位が必要です。<br>
+  全体として単位数は十分です。<br><br>
+  " ;
+}else {
+  # code...
+  echo "世界教養全体では". $requirelaAll. "の単位が必要です。<br>
+  全体として単位数は不十分です。<br><br>
+  " ;
+}
+
+ ?>
+<?php
+
 
 
 
@@ -150,26 +231,6 @@ if ($facultyName == "国際社会学部" ) {
   echo "<h2>申し訳ございません。現在、国際社会学部のみ対応しております</h2>";
 }
 
-/*
-echo "<h2>登録に成功しました。</h2>";
-
-
-echo
-  "登録した専攻言語単位数は $langMajor<br>
-  登録した教養外国語単位数は $langOther<br>
-  登録した地域言語c単位数は $langC<br>
-  登録したGLIP単位数は $langEng<br>";
-
-//取得数の和
-$langTotal = $langMajor + $langOther + $langC + $langEng;
-
-echo "<b>言語単位の合計は $langTotal</b>";
-
-//残り必要単位の表示
-$langNeed = 36 - $langTotal;
-echo "<h2>残り必要な言語単位は $langNeed</h2>";
-
-*/
 
 }
 
