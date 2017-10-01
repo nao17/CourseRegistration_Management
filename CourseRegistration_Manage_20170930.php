@@ -6,7 +6,7 @@
 </head>
 <body>
 <?php
-//遷移先のファイルで処理する
+//以下の内容は遷移先のファイルで処理する
 
 /*
 //htmlフォームで登録された場合
@@ -64,6 +64,15 @@ echo "<h2>残り必要な言語単位は $langNeed</h2>";
     <input type="number" name="CreditLangAreaC"><br />
     GLIP単位数: <br />
     <input type="number" name="CreditLangEnglish"><br />
+
+    地域基礎単位数: <br />
+    <input type="number" name="CreditAreaBasis"><br />
+    基礎演習単位数: <br />
+    <input type="number" name="CreditReportBasis"><br />
+    基礎リテラシー単位数: <br />
+    <input type="number" name="CreditLiteracyBasis"><br />
+
+
     <br />
     <input type="submit" name = "register" value="Register" />
     <br />
