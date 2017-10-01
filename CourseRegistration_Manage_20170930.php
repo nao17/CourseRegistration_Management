@@ -123,6 +123,11 @@ echo "<h2>残り必要な言語単位は $langNeed</h2>";
     選択科目 卒論: <br />
     <input type="number" name="CreditElectiveReport"><br />
 
+    スポーツ: <br />
+    <input type="number" name="CreditSport"><br />
+    関連科目: <br />
+    <input type="number" name="CreditRele"><br />
+
 <?php
 //ループだと反映されない。原因不明
 /*

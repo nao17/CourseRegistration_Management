@@ -36,6 +36,9 @@ $ResultElectiveSeminar = $_POST["CreditElectiveSeminar"];
 $ResultElectiveReportExe = $_POST["CreditElectiveReportExe"];
 $ResultElectiveReport = $_POST["CreditElectiveReport"];
 
+$Resultsport = $_POST["CreditSport"];
+$ResultRele = $_POST["CreditRele"];
+
 
   //取得単位数の配列
   //取得単位数の配列ー言語
@@ -86,7 +89,7 @@ $reqElectiveReport = 8;
 //他
 
 $reqSport = 1;
-$reqRel = 17;
+$reqRele = 17;
   //必要単位数の配列
   $CreditReqBasisAll = array($requireAreaBasis, $requireReportBasis, $requireLiteracyBasis);
   $CreditReqlaArray = array($requirelaA, $requirelaB, $requirelaC);
@@ -254,39 +257,89 @@ if ($laTotal >= $requirelaAll) {
 }
 
  ?>
- <?php echo "<h3>専修プログラム</h3>"; ?>
+ <?php echo "<h3>その他</h3>"; ?>
  <table border="1">
  <?php
    echo "<tr>";
-   echo "<th>". "登録した専修プログラム". "</th>";
+   echo "<th>". "登録したその他". "</th>";
    echo "<th>". "取得単位数". "</th>";
    echo "</tr>";
 
-   for ($i=0; $i < $cntIntroEle; $i++) {
-     # code...
+
      echo "<tr>";
-     echo "<td>". $NameIntroEleArray[$i]. "</td>";
-     echo "<td>". $CreditIntroEleArray[$i]. "</td>";
+     echo "<td>". "スポーツ科目". "</td>";
+     echo "<td>". $Resultsport. "</td>";
      echo "</tr>";
-     }
+
+     echo "<tr>";
+     echo "<td>". "関連科目". "</td>";
+     echo "<td>". $ResultRele. "</td>";
+     echo "</tr>";
 
    ?>
    </table>
 
+<?php
+?>
+<?php echo "<h3>専修プログラム</h3>"; ?>
+<table border="1">
+<?php
+  echo "<tr>";
+  echo "<th>". "登録した専修プログラム". "</th>";
+  echo "<th>". "取得単位数". "</th>";
+  echo "</tr>";
+
+  for ($i=0; $i < $cntIntroEle; $i++) {
+    # code...
+    echo "<tr>";
+    echo "<td>". $NameIntroEleArray[$i]. "</td>";
+    echo "<td>". $CreditIntroEleArray[$i]. "</td>";
+    echo "</tr>";
+    }
+
+  ?>
+  </table>
+
+    <table border="1">
+<?php
+echo "<tr>";
+echo "<th>". "登録した専修科目". "</th>";
+echo "<th>". "必要単位数". "</th>";
+echo "<th>". "判定". "</th>";
+echo "</tr>";
+
+for ($i=0; $i < $cntIntroEle; $i++) {
+  # code...
+  echo "<tr>";
+  echo "<td>". $NameIntroEleArray[$i]. "</td>";
+  echo "<td>". $ReqIntroEleArray[$i]. "</td>";
+  if ($CreditIntroEleArray[$i] >= $ReqIntroEleArray[$i]) {
+    # code...
+    echo "<td>必要な単位数は確保されています</td>";
+  }else {
+    # code...
+    echo "<td>単位数が足りません</td>";
+  }
+  echo "</tr>";
+  }
+
+?>
+</table>
+
+
      <table border="1">
  <?php
  echo "<tr>";
- echo "<th>". "登録した専修科目". "</th>";
+ echo "<th>". "登録したその他の科目". "</th>";
  echo "<th>". "必要単位数". "</th>";
  echo "<th>". "判定". "</th>";
  echo "</tr>";
 
- for ($i=0; $i < $cntIntroEle; $i++) {
-   # code...
+
    echo "<tr>";
-   echo "<td>". $NameIntroEleArray[$i]. "</td>";
-   echo "<td>". $ReqIntroEleArray[$i]. "</td>";
-   if ($CreditIntroEleArray[$i] >= $ReqIntroEleArray[$i]) {
+   echo "<td>". "スポーツ科目". "</td>";
+   echo "<td>". $reqSport . "</td>";
+   if ($Resultsport >= $reqSport) {
      # code...
      echo "<td>必要な単位数は確保されています</td>";
    }else {
@@ -294,7 +347,18 @@ if ($laTotal >= $requirelaAll) {
      echo "<td>単位数が足りません</td>";
    }
    echo "</tr>";
+
+   echo "<tr>";
+   echo "<td>". "関連科目". "</td>";
+   echo "<td>". $reqRele . "</td>";
+   if ($ResultRele >= $reqRele) {
+     # code...
+     echo "<td>必要な単位数は確保されています</td>";
+   }else {
+     # code...
+     echo "<td>単位数が足りません</td>";
    }
+   echo "</tr>";
 
  ?>
  </table>
