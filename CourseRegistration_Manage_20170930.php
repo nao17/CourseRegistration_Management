@@ -17,18 +17,49 @@ $langMajor = $_POST["CreditLangMajor"];
 $langOther = $_POST["CreditLangOther"];
 $langC = $_POST["CreditLangAreaC"];
 $langEng = $_POST["CreditLangEnglish"];
+/配列で格納
+//言語
+$CreditlangAll = array($langMajor, $langOther, $langC, $langEng);
+$NamelangAll = array('専攻言語', '教養外国語', '地域言語c', 'GLIP');
+$CountlangAll = count($CreditlangAll);
 
 
 var_dump($langMajor);
 echo "<h2>登録に成功しました。</h2>";
 
 
-echo
-  "登録した専攻言語単位数は $langMajor<br>
-  登録した教養外国語単位数は $langOther<br>
-  登録した地域言語c単位数は $langC<br>
-  登録したGLIP単位数は $langEng<br>";
+//以下はテスト用。同内容をループ・テーブル表示
+  /*echo
+    "登録した専攻言語単位数は $langMajor<br>
+    登録した教養外国語単位数は $langOther<br>
+    登録した地域言語c単位数は $langC<br>
+    登録したGLIP単位数は $langEng<br>";
+?>
+<table border="1">
+<?php
+  echo "<tr>";
+  echo "<th>". "登録した言語科目". "</th>";
+  echo "<th>". "単位数". "</th>";
+  echo "</tr>";
 
+  for ($i=0; $i < $CountlangAll; $i++) {
+    # code...
+    echo "<tr>";
+    echo "<td>". $NamelangAll[$i]. "</td>";
+    echo "<td>". $CreditlangAll[$i]. "</td>";
+    echo "</tr>";
+    }
+
+    //取得数の和
+    $langTotal = $langMajor + $langOther + $langC + $langEng;
+    echo "<tr>";
+    echo "<th>". "言語単位の合計". "</th>";
+    echo "<th>". "$langTotal". "</th>";
+    echo "</tr>";
+    ?>
+  </table>
+
+<?php
 //取得数の和
 $langTotal = $langMajor + $langOther + $langC + $langEng;
 
