@@ -62,10 +62,16 @@ $ResultRele = $_POST["CreditRele"];
     $laAll = array($laA, $laB, $laC);
     $cntla = count($laAll);
 
+
+
   $CreditIntroEleArray = array($ResultIntro, $ResultIntro2, $ResultElectiveLec, $ResultElectiveSeminar, $ResultElectiveReportExe,$ResultElectiveReport);
    $cntIntroEle = count($CreditIntroEleArray);
     $NameIntroEleArray = array("導入科目","概論", "選択科目 講義", "選択科目 ゼミ", "選択科目 卒論演習", "択科目 卒論");
-
+//和
+//言語単位の和
+$langTotal = $langMajor + $langOther + $langC + $langEng;
+//世界教養
+$laTotal = array_sum($CreditlaAll);
 
 //卒業に必要な単位数を前もって格納
 $requirelang = 36;
@@ -95,6 +101,63 @@ $reqRele = 17;
   $CreditReqlaArray = array($requirelaA, $requirelaB, $requirelaC);
   $ReqIntroEleArray = array($reqIntro, $reqIntro2, $reqElectiveLec, $reqElectiveSeminar, $reqElectiveReportExe, $reqElectiveReport);
 
+//関連科目の計算
+//各項目の差　必要な単位数からすでにある単位数を引く
+$GapLang = $requirelang - $langTotal;
+$GaplaAll = $requirelaAll - $laTotal;
+$GapIntro = $reqIntro - $ResultIntro;
+$GapIntro2 = $reqIntro2 - $ResultIntro2;
+$GapElectiveLec = $reqElectiveLec - $ResultElectiveLec;
+$GapElectiveSeminar = $reqElectiveSeminar - $ResultElectiveSeminar;
+$GapElectiveReportExe = $reqElectiveReportExe - $ResultElectiveReportExe;
+$GapElectiveReport = $reqElectiveReport - $ResultElectiveReport;
+
+//デバック
+var_dump($GaplaAll);
+
+//もし関連科目に算入する分がない（正）場合、値gapは無視する（0として扱う)
+if ($GapLang >= 0) {
+  $GapLang = 0;
+}
+if ($GaplaAll >= 0) {
+  $GaplaAll = 0;
+}
+if ($GapIntro >= 0) {
+  $GapIntro = 0;
+}
+if ($GapIntro2 >= 0) {
+  $GapIntro2 = 0;
+}
+if ($GapElectiveLec >= 0) {
+  $GapElectiveLec = 0;
+}
+if ($GapElectiveSeminar >= 0) {
+  $GapElectiveSeminar = 0;
+}
+if ($GapElectiveReportExe >= 0) {
+  $GapElectiveReportExe = 0;
+}
+if ($GapElectiveReport >= 0) {
+  $GapElectiveReport = 0;
+}
+
+//デバック
+var_dump($GaplaAll);
+//余った単位をまとめておく（負）
+$CreditRestSumMinus = $GapLang + $GaplaAll + $GapIntro + $GapIntro2 + $GapElectiveLec + $GapElectiveSeminar + $GapElectiveReportExe + $GapElectiveReport;
+//デバック
+var_dump($CreditRestSumMinus);
+
+//まとめたものを正に直しておく
+$CreditRestSumPlus = abs($CreditRestSumMinus);
+
+//デバック var_dump($CreditRestSumPlus);
+
+//関連科目は全てでいくつあるのか和
+$CreditRelTotal = $ResultRele + $CreditRestSumPlus;
+//デバック var_dump($CreditRelTotal);
+$GapRelTotal = $reqRele - $CreditRelTotal;
+//デバック var_dump($GapRelTotal);
 
 //チェック
 //var_dump($CreditReqBasisAll);
@@ -132,7 +195,6 @@ if ($facultyName == "国際社会学部" ) {
     }
 
     //取得数の和
-    $langTotal = $langMajor + $langOther + $langC + $langEng;
     echo "<tr>";
     echo "<th>". "取得した言語単位の合計". "</th>";
     echo "<th>". "$langTotal". "</th>";
@@ -189,7 +251,8 @@ if ($facultyName == "国際社会学部" ) {
         echo "<td>必要な単位数は確保されています</td>";
       }else {
         # code...
-        echo "<td>単位数が足りません</td>";
+        $NeedBasisAll[$i] = $CreditReqBasisAll[$i] - $CreditBasisAll[$i];
+        echo "<td>単位数が足りません。あと". $NeedBasisAll[$i]. "単位必要です。</td>";
       }
       echo "</tr>";
       }
@@ -236,14 +299,15 @@ for ($i=0; $i < $cntla; $i++) {
     echo "<td>必要な単位数は確保されています</td>";
   }else {
     # code...
-    echo "<td>単位数が足りません</td>";
+    $NeedlaAll[$i] = $CreditReqlaArray[$i] - $CreditlaAll[$i];
+    echo "<td>単位数が足りません。あと". $NeedlaAll[$i]. "単位必要です。</td>";
   }
   echo "</tr>";
   }
 ?>
 </table>
 <?php
-$laTotal = array_sum($CreditlaAll);
+
 if ($laTotal >= $requirelaAll) {
   # code...
   echo "世界教養全体では". $requirelaAll. "の単位が必要です。<br>
@@ -257,27 +321,7 @@ if ($laTotal >= $requirelaAll) {
 }
 
  ?>
- <?php echo "<h3>その他</h3>"; ?>
- <table border="1">
- <?php
-   echo "<tr>";
-   echo "<th>". "登録したその他". "</th>";
-   echo "<th>". "取得単位数". "</th>";
-   echo "</tr>";
 
-
-     echo "<tr>";
-     echo "<td>". "スポーツ科目". "</td>";
-     echo "<td>". $Resultsport. "</td>";
-     echo "</tr>";
-
-     echo "<tr>";
-     echo "<td>". "関連科目". "</td>";
-     echo "<td>". $ResultRele. "</td>";
-     echo "</tr>";
-
-   ?>
-   </table>
 
 <?php
 ?>
@@ -318,13 +362,41 @@ for ($i=0; $i < $cntIntroEle; $i++) {
     echo "<td>必要な単位数は確保されています</td>";
   }else {
     # code...
-    echo "<td>単位数が足りません</td>";
+    $NeedIntroEleArray[$i] = $ReqIntroEleArray[$i] - $CreditIntroEleArray[$i];
+    echo "<td>単位数が足りません。あと". $NeedIntroEleArray[$i] . "単位必要です。</td>";
   }
   echo "</tr>";
   }
 
 ?>
 </table>
+
+<?php echo "<h3>その他</h3>"; ?>
+<table border="1">
+<?php
+  echo "<tr>";
+  echo "<th>". "登録したその他". "</th>";
+  echo "<th>". "取得単位数". "</th>";
+  echo "</tr>";
+
+
+    echo "<tr>";
+    echo "<td>". "スポーツ科目". "</td>";
+    echo "<td>". $Resultsport. "</td>";
+    echo "</tr>";
+
+    echo "<tr>";
+    echo "<td>". "関連科目（直接入力したもの）". "</td>";
+    echo "<td>". $ResultRele. "</td>";
+    echo "</tr>";
+
+    echo "<tr>";
+    echo "<td>". "関連科目（他の余り）". "</td>";
+    echo "<td>". $CreditRestSumPlus. "</td>";
+    echo "</tr>";
+
+  ?>
+  </table>
 
 
      <table border="1">
@@ -344,19 +416,21 @@ for ($i=0; $i < $cntIntroEle; $i++) {
      echo "<td>必要な単位数は確保されています</td>";
    }else {
      # code...
-     echo "<td>単位数が足りません</td>";
+     $NeedSport = $reqSport - $Resultsport;
+     echo "<td>単位数が足りません</td> ";
    }
    echo "</tr>";
+
 
    echo "<tr>";
    echo "<td>". "関連科目". "</td>";
    echo "<td>". $reqRele . "</td>";
-   if ($ResultRele >= $reqRele) {
+   if ($CreditRelTotal >= $reqRele) {
      # code...
-     echo "<td>必要な単位数は確保されています</td>";
+     echo "<td>必要な単位数は確保されています。". $CreditRelTotal. "単位あります。 </td>";
    }else {
      # code...
-     echo "<td>単位数が足りません</td>";
+     echo "<td>単位数が足りません。". $GapRelTotal. "単位必要です。</td>";
    }
    echo "</tr>";
 
