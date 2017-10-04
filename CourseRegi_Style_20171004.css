@@ -1,0 +1,22 @@
+<@charset "UTF-8";>
+
+h1{
+  font-size: 20px,
+  color: #00ced1;
+}
+
+body {
+    background: #40e0d0;
+  }
+
+#StyleLang {
+  color:#40e0d0;
+  font-size:16px;
+  border: 1px solid #cccccc;
+}
+
+#StyleTable{
+  background: #FFFFCC;
+  padding: 10px;
+  text-align: center;
+}

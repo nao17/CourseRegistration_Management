@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
 <title>"取得単位管理システム"</title>
+<link rel="stylesheet" href="CourseRegi_Style_20171004.css">
 </head>
 <body>
 <?php
@@ -82,11 +83,14 @@ echo "<h2>残り必要な言語単位は $langNeed</h2>";
 
      <h1>累計取得単位数を登録してください</h1>
 
+<div id = "StyleTable">
  <form action="CourseRegistration_result1_20170930.php" method="post">
    学部: <br />
    <input type="radio" name="faculty" value="国際社会学部">国際社会学部
 <input type="radio" name="faculty" value="言語文化学部">言語文化学部
 <input type="radio" name="faculty" value="外国語学部">外国語学部<br />
+
+<div id = "StyleLang">
     専攻言語単位数: <br />
     <input type="number" name="CreditLangMajor"><br />
     教養外国語単位数: <br />
@@ -95,6 +99,7 @@ echo "<h2>残り必要な言語単位は $langNeed</h2>";
     <input type="number" name="CreditLangAreaC"><br />
     GLIP単位数: <br />
     <input type="number" name="CreditLangEnglish"><br />
+</div>
 
     地域基礎単位数: <br />
     <input type="number" name="CreditAreaBasis"><br />
@@ -127,6 +132,8 @@ echo "<h2>残り必要な言語単位は $langNeed</h2>";
     <input type="number" name="CreditSport"><br />
     関連科目: <br />
     <input type="number" name="CreditRele"><br />
+
+</div>
 
 <?php
 //ループだと反映されない。原因不明

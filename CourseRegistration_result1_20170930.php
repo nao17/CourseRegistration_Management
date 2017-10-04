@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
 <title>"取得単位管理システム"</title>
+<link rel="stylesheet" href="CourseRegi_Style_20171004.css">
 </head>
 <body>
   <h1>累計取得した単位数・今後必要な単位数を表示します</h1>
