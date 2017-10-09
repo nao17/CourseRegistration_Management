@@ -6,17 +6,17 @@ h1{
 }
 
 body {
-    background: #40e0d0;
+    background: #c7dba7;
   }
 
 #StyleLang {
-  color:#40e0d0;
+  color:#4f666a;
   font-size:16px;
-  border: 1px solid #cccccc;
+  border: 1px solid #c7dba7;
 }
 
 #StyleTable{
-  background: #FFFFCC;
+  background: #f4eded;
   padding: 10px;
   text-align: center;
 }

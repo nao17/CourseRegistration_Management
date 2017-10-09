@@ -91,13 +91,14 @@ echo "<h2>残り必要な言語単位は $langNeed</h2>";
 <input type="radio" name="faculty" value="外国語学部">外国語学部<br />
 
 <div id = "StyleLang">
-    専攻言語単位数: <br />
+  <h2>言語単位</h2>
+    専攻言語単位数:
     <input type="number" name="CreditLangMajor"><br />
-    教養外国語単位数: <br />
+    教養外国語単位数:
     <input type="number" name="CreditLangOther"><br />
-    地域言語c単位数: <br />
+    地域言語c単位数:
     <input type="number" name="CreditLangAreaC"><br />
-    GLIP単位数: <br />
+    GLIP単位数:
     <input type="number" name="CreditLangEnglish"><br />
 </div>
 
