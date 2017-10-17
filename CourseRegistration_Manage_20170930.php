@@ -81,17 +81,19 @@ echo "<h2>残り必要な言語単位は $langNeed</h2>";
 
 
 
-     <h1>累計取得単位数を登録してください</h1>
-
-<div id = "StyleTable">
+     <h1>累計取得単位数の入力フォーム</h1>
+   <h2>登録してください</h2>
+<h3>学部</h3>
+<div id = "StyleReg">
  <form action="CourseRegistration_result1_20170930.php" method="post">
-   学部: <br />
    <input type="radio" name="faculty" value="国際社会学部">国際社会学部
 <input type="radio" name="faculty" value="言語文化学部">言語文化学部
 <input type="radio" name="faculty" value="外国語学部">外国語学部<br />
+</div>
 
-<div id = "StyleLang">
-  <h2>言語単位</h2>
+  <h3>言語単位</h3>
+
+  <div id = "StyleReg">
     専攻言語単位数:
     <input type="number" name="CreditLangMajor"><br />
     教養外国語単位数:
@@ -102,38 +104,48 @@ echo "<h2>残り必要な言語単位は $langNeed</h2>";
     <input type="number" name="CreditLangEnglish"><br />
 </div>
 
-    地域基礎単位数: <br />
+<h3>基礎単位</h3>
+  <div id = "StyleReg">
+    地域基礎単位数:
     <input type="number" name="CreditAreaBasis"><br />
-    基礎演習単位数: <br />
+    基礎演習単位数:
     <input type="number" name="CreditReportBasis"><br />
-    基礎リテラシー単位数: <br />
+    基礎リテラシー単位数:
     <input type="number" name="CreditLiteracyBasis"><br />
+</div>
 
-    世界教養区分ア: <br />
+<h3>世界教養</h3>
+  <div id = "StyleReg">
+    世界教養区分ア:
     <input type="number" name="CreditlaA"><br />
-    世界教養区分イ: <br />
+    世界教養区分イ:
     <input type="number" name="CreditlaB"><br />
-    世界教養区分ウ: <br />
+    世界教養区分ウ:
     <input type="number" name="CreditlaC"><br />
+</div>
 
-    導入科目: <br />
+<h3>専修単位</h3>
+  <div id = "StyleReg">
+    導入科目:
     <input type="number" name="CreditIntro"><br />
-    概論: <br />
+    概論:
     <input type="number" name="CreditIntro2"><br />
-    選択科目 講義: <br />
+    選択科目 講義:
     <input type="number" name="CreditElectiveLec"><br />
-    選択科目 ゼミ: <br />
+    選択科目 ゼミ:
     <input type="number" name="CreditElectiveSeminar"><br />
-    選択科目 卒論演習: <br />
+    選択科目 卒論演習:
     <input type="number" name="CreditElectiveReportExe"><br />
-    選択科目 卒論: <br />
+    選択科目 卒論:
     <input type="number" name="CreditElectiveReport"><br />
+</div>
 
-    スポーツ: <br />
+<h3>他</h3>
+  <div id = "StyleReg">
+    スポーツ:
     <input type="number" name="CreditSport"><br />
-    関連科目: <br />
+    関連科目:
     <input type="number" name="CreditRele"><br />
-
 </div>
 
 <?php
@@ -163,11 +175,12 @@ var_dump($PostlaAll[$i]);
 */
 
  ?>
-
+<div id = "StyleReg">
     <br />
     <input type="submit" name = "register" value="Register" />
     <br />
 </form>
+</div>
 
 </body>
 </html>
