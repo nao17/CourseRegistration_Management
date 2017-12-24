@@ -23,7 +23,7 @@ h2{
     font-size: 35px;
     text-align: center;
     line-height: 2.0em;
-    border-bottom: 1px solid #85beab;
+    border-bottom: 1px solid #999999;
     &:first-letter{
         font-size: 48px;
     }
@@ -31,8 +31,8 @@ h2{
 
 
  h3{
-   font-size: 30px;
-   line-height: 1.7em;
+   font-size: 25px;
+   line-height: 1.5em;
    text-align: center;
      color: #999999;
      background: #fff;
@@ -40,13 +40,15 @@ h2{
  }
 
  h3:first-letter {
- font-size: 2em;
+ font-size: 1.4em;
  color: #336666;
  }
 
- h4{
 
+ h4{
+  color: #fff;
 text-align: center;
+
  }
 
 
@@ -78,11 +80,27 @@ table{
 
 }
 
+ul{
+    text-align: center;
+}
 
+#line{
+    border-bottom: 1px solid #999999;
 
-#StyleReg {
-  color:#fff;
-  font-size:16px;
-  border: 1px solid #336666;
-  background: #336666;
+}
+
+#link{
+background: #fff;
+}
+table{
+
+  color: #fff;
+  width: 80%;
+  margin: 0 auto;
+  padding: 14px;
+  background: #23466e;
+}
+td {
+	border: solid 1px;
+	padding: 0.5em;
 }

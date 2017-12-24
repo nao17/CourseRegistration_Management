@@ -1,3 +1,8 @@
+<?php
+session_start();
+if (isset($_SESSION["NAME"])) {
+	echo "ログイン中です。";
+?>
 <!DOCTYPE html>
 <html lang="ja">
   <head>
@@ -5,6 +10,10 @@
 <title>"取得単位管理システム"</title>
 <link rel="stylesheet" href="CourseRegi_Style_20171004.css">
 </head>
+  <header>
+	   <h1>BBS</h1>
+  		<p><u><?php echo htmlspecialchars($_SESSION["NAME"], ENT_QUOTES); ?></u>さんとしてログインしています。</p>
+  </header>
 <body>
 <?php
 //以下の内容は遷移先のファイルで処理する
@@ -82,8 +91,9 @@ echo "<h2>残り必要な言語単位は $langNeed</h2>";
 
 
      <h1>累計取得単位数の入力フォーム</h1>
-   <h2>登録してください</h2>
-<h3>学部</h3>
+   <h2 id = "link1">2016年度入学のみに対応しています。2017,11,18</h2>
+<h3>所属を登録してください。</h3>
+<h4>学部</h4>
 <div id = "StyleReg">
  <form action="CourseRegistration_result1_20170930.php" method="post">
    <input type="radio" name="faculty" value="国際社会学部">国際社会学部
@@ -91,8 +101,9 @@ echo "<h2>残り必要な言語単位は $langNeed</h2>";
 <input type="radio" name="faculty" value="外国語学部">外国語学部<br />
 </div>
 
-  <h3>言語単位</h3>
+  <h3>取得単位数を入力してください。</h3>
 
+<h4>言語単位</h4>
   <div id = "StyleReg">
     専攻言語単位数:
     <input type="number" name="CreditLangMajor"><br />
@@ -103,8 +114,10 @@ echo "<h2>残り必要な言語単位は $langNeed</h2>";
     GLIP単位数:
     <input type="number" name="CreditLangEnglish"><br />
 </div>
+<div id = "line">
+  </div>
 
-<h3>基礎単位</h3>
+<h4>基礎単位</h4>
   <div id = "StyleReg">
     地域基礎単位数:
     <input type="number" name="CreditAreaBasis"><br />
@@ -113,8 +126,10 @@ echo "<h2>残り必要な言語単位は $langNeed</h2>";
     基礎リテラシー単位数:
     <input type="number" name="CreditLiteracyBasis"><br />
 </div>
+<div id = "line">
+  </div>
 
-<h3>世界教養</h3>
+<h4>世界教養</h4>
   <div id = "StyleReg">
     世界教養区分ア:
     <input type="number" name="CreditlaA"><br />
@@ -123,9 +138,12 @@ echo "<h2>残り必要な言語単位は $langNeed</h2>";
     世界教養区分ウ:
     <input type="number" name="CreditlaC"><br />
 </div>
+<div id = "line">
+  </div>
 
-<h3>専修単位</h3>
+<h4>専修単位</h4>
   <div id = "StyleReg">
+
     導入科目:
     <input type="number" name="CreditIntro"><br />
     概論:
@@ -139,14 +157,20 @@ echo "<h2>残り必要な言語単位は $langNeed</h2>";
     選択科目 卒論:
     <input type="number" name="CreditElectiveReport"><br />
 </div>
+<div id = "line">
+  </div>
 
-<h3>他</h3>
+<h4>他</h4>
   <div id = "StyleReg">
     スポーツ:
     <input type="number" name="CreditSport"><br />
     関連科目:
     <input type="number" name="CreditRele"><br />
 </div>
+<div id = "line">
+  </div>
+
+
 
 <?php
 //ループだと反映されない。原因不明
@@ -177,10 +201,19 @@ var_dump($PostlaAll[$i]);
  ?>
 <div id = "StyleReg">
     <br />
-    <input type="submit" name = "register" value="Register" />
+    <input type="submit" name = "register" value="Register" /><br /><br />
     <br />
 </form>
-</div>
 
+<div id ="link">
+  <a href = "#link1"> ページの先頭に戻る</a>
+  </div>
 </body>
 </html>
+<?
+		}else {
+			header("Location: login_manage_20171202.php");
+			exit();
+
+		}
+		?>
