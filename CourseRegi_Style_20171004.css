@@ -92,15 +92,7 @@ ul{
 #link{
 background: #fff;
 }
-table{
 
-  color: #fff;
-  width: 80%;
-  margin: 0 auto;
-  padding: 14px;
-  background: #23466e;
-}
-td {
-	border: solid 1px;
-	padding: 0.5em;
-}
+table, td, th {
+border: 2px #808080 solid;
+background: #fff; }

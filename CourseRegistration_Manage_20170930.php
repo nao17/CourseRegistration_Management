@@ -212,7 +212,7 @@ var_dump($PostlaAll[$i]);
 </html>
 <?
 		}else {
-			header("Location: login_manage_20171202.php");
+			header("Location: login_manage_20171222.php");
 			exit();
 
 		}

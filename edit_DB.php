@@ -1,16 +1,22 @@
 <?php
 session_start();
 if (isset($_SESSION["NAME"])) {
-	echo "ログイン中です。";
+	echo '<table>';
+	echo '<td>';
+	echo '<th>'. htmlspecialchars($_SESSION["NAME"], ENT_QUOTES). 'さんとしてログインしています。</th>';
+	echo '<th><a href="main.php">マイページ</a></th>';
+	echo '</td>';
+	echo '</table>';
+	  $Str_Name = $_SESSION["NAME"];
 ?>
 <html>
 <head>
-<title>reimbursement form</title>
-<link rel="stylesheet" type="text/css" href="display_style.css">
+<title>Course registration manager</title>
+<link rel="stylesheet" type="text/css" href="CourseRegi_Style_20171004.css">
 <meta http-equiv="content-type" charset="utf-8">
 </head>
 <header>
-	<h1>BBS</h1>
+	<h1>登録情報の編集</h1>
   		<p><u><?php echo htmlspecialchars($_SESSION["NAME"], ENT_QUOTES); ?></u>さんとしてログインしています。</p>
   </header>
   <?php
@@ -31,17 +37,19 @@ if (isset($_SESSION["NAME"])) {
   ?>
 
   <?php
+	/*更新順序的に後ろ
   //テーブル情報をmysqlより取得
-  $sql = "SELECT * FROM creditN";
-  $stmh = $pdo->prepare($sql);
-  $stmh->execute();
+	$sql = "SELECT * FROM creditN  where name = :name";
+	  $stmh = $pdo->prepare($sql);
+	  $stmh->bindValue(":name", "$Str_Name");
+	  $stmh->execute();
   //$rows = $stmh->fetchAll();
 
   //取得した情報をテーブル表示
-  echo "<table>";
+	echo "<table>";
   $ArrayDisplay= array('専攻言語単位数', '教養外国語単位数', '地域言語c単位数', 'GLIP単位数');
   $NumArrayDisplay = count($ArrayDisplay);
-  var_dump($NumArrayDisplay);
+  //var_dump($NumArrayDisplay);
 
       echo "<tr>";
     for ($i=0; $i < $NumArrayDisplay  ; $i++) {
@@ -49,7 +57,7 @@ if (isset($_SESSION["NAME"])) {
       }
       echo "</tr>";
 
-var_dump($rows['name']);
+//var_dump($rows['name']);
 
     while($rows = $stmh->fetch(PDO::FETCH_ASSOC)){
       echo "<tr>";
@@ -62,12 +70,13 @@ var_dump($rows['name']);
   echo "</table>";
 
   $stmh2 = $pdo->prepare($sql);
+  $stmh2->bindValue(":name", "$Str_Name");
   $stmh2 ->execute();
 
   echo "<table>";
   $ArrayDisplay= array('地域基礎単位数', '基礎演習単位数', '基礎リテラシー単位数');
   $NumArrayDisplay = count($ArrayDisplay);
-  var_dump($NumArrayDisplay);
+  //var_dump($NumArrayDisplay);
 
       echo "<tr>";
     for ($i=0; $i < $NumArrayDisplay  ; $i++) {
@@ -86,12 +95,13 @@ var_dump($rows['name']);
 
 
   $stmh3 = $pdo->prepare($sql);
+    $stmh3->bindValue(":name", "$Str_Name");
   $stmh3 ->execute();
 
   echo "<table>";
   $ArrayDisplay= array('世界教養区分ア', '世界教養区分イ', '世界教養区分ウ');
   $NumArrayDisplay = count($ArrayDisplay);
-  var_dump($NumArrayDisplay);
+  //var_dump($NumArrayDisplay);
 
       echo "<tr>";
     for ($i=0; $i < $NumArrayDisplay  ; $i++) {
@@ -111,13 +121,14 @@ var_dump($rows['name']);
   echo "</table>";
 
   $stmh4 = $pdo->prepare($sql);
+  $stmh4->bindValue(":name", "$Str_Name");
   $stmh4 ->execute();
 
 
   echo "<table>";
   $ArrayDisplay= array('導入科目', '概論', '選択科目 講義', '選択科目 ゼミ', '選択科目 卒論演習', '選択科目 卒論');
   $NumArrayDisplay = count($ArrayDisplay);
-  var_dump($NumArrayDisplay);
+  //var_dump($NumArrayDisplay);
 
       echo "<tr>";
     for ($i=0; $i < $NumArrayDisplay  ; $i++) {
@@ -138,12 +149,13 @@ var_dump($rows['name']);
   echo "</table>";
 
   $stmh5 = $pdo->prepare($sql);
+  $stmh5->bindValue(":name", "$Str_Name");
   $stmh5 ->execute();
 
   echo "<table>";
   $ArrayDisplay= array('スポーツ', '関連科目');
   $NumArrayDisplay = count($ArrayDisplay);
-  var_dump($NumArrayDisplay);
+  //var_dump($NumArrayDisplay);
 
       echo "<tr>";
     for ($i=0; $i < $NumArrayDisplay  ; $i++) {
@@ -158,11 +170,11 @@ var_dump($rows['name']);
       echo "</tr>";
   }
   echo "</table>";
+	*/
   ?>
   <?php
+	$Str_Name = $_SESSION["NAME"];
 if (isset($_POST["register"])){
-
-  $Str_Name = $_SESSION["NAME"];
 
   $langMajor = (int)$_POST["CreditLangMajor"];
   $langOther = (int)$_POST["CreditLangOther"];
@@ -184,9 +196,12 @@ if (isset($_POST["register"])){
   $ResultElectiveReportExe = (int)$_POST["CreditElectiveReportExe"];
   $ResultElectiveReport = (int)$_POST["CreditElectiveReport"];
 
-  $Resultsport = (int)$_POST["CreditSport"];
-  $ResultRele = (int)$_POST["CreditRele"];
-  var_dump($ResultRele);
+  $Resultsport = (int)$_POST["Resultsport"];
+  $ResultRele = (int)$_POST["ResultRele"];
+
+	$Str_Eid = $_POST['Edit_id'];
+
+  //var_dump($ResultRele);
   $arrayStored = array($Str_Name, $Str_Comment);
 
   require_once('cfg2.php');
@@ -197,35 +212,44 @@ if (isset($_POST["register"])){
         exit('データベース接続失敗。'.$e->getMessage());
   }
 
-  $sql = "INSERT INTO creditN (name,  langMajor,  langOther, langC, langEng, AreaBasis, ReportBasis, LiteracyBasis, ResultlaA, ResultlaB, ResultlaC, ResultIntro, ResultIntro2, ResultElectiveLec, ResultElectiveSeminar, ResultElectiveReportExe,ResultElectiveReport, Resultsport, ResultRele) VALUES(:name, :langMajor, :langOther, :langC, :langEng, :AreaBasis, :ReportBasis, :LiteracyBasis, :ResultlaA, :ResultlaB, :ResultlaC, :ResultIntro, :ResultIntro2, :ResultElectiveLec, :ResultElectiveSeminar, :ResultElectiveReportExe, :ResultElectiveReport, :Resultsport, :ResultRele)";
-var_dump(  $sql);
+  $sqlE = "update creditN set langMajor=:langMajor, langC=:langC, langEng=:langEng, AreaBasis=:AreaBasis, ReportBasis=:ReportBasis, LiteracyBasis=:LiteracyBasis, ResultlaA=:ResultlaA, ResultlaB=:ResultlaB, ResultlaC=:ResultlaC, ResultIntro=:ResultIntro, ResultIntro2=:ResultIntro2, ResultElectiveLec=:ResultElectiveLec, ResultElectiveSeminar=:ResultElectiveSeminar, ResultElectiveReportExe=:ResultElectiveReportExe, ResultElectiveReport=:ResultElectiveReport, Resultsport=:Resultsport, ResultRele=:ResultRele where name = :name";
+//var_dump($sqlE);
 
-      $stmh = $pdo->prepare($sql);
-  		$stmh->bindValue(":name", "$Str_Name");
-      $stmh->bindValue(":langMajor", $langMajor, PDO::PARAM_INT);
-      $stmh->bindValue(":langOther", $langOther, PDO::PARAM_INT);
-      $stmh->bindValue(":langC", $langC, PDO::PARAM_INT);
-      $stmh->bindValue(":langEng", $langEng, PDO::PARAM_INT);
-      $stmh->bindValue(":AreaBasis", $AreaBasis, PDO::PARAM_INT);
-      $stmh->bindValue(":ReportBasis", $ReportBasis, PDO::PARAM_INT);
-      $stmh->bindValue(":LiteracyBasis", $LiteracyBasis, PDO::PARAM_INT);
-      $stmh->bindValue(":ResultlaA", $ResultlaA, PDO::PARAM_INT);
-      $stmh->bindValue(":ResultlaB", $ResultlaB, PDO::PARAM_INT);
-      $stmh->bindValue(":ResultlaC", $ResultlaC, PDO::PARAM_INT);
-      $stmh->bindValue(":ResultIntro", $ResultIntro, PDO::PARAM_INT);
-      $stmh->bindValue(":ResultIntro2", $ResultIntro2, PDO::PARAM_INT);
-      $stmh->bindValue(":ResultElectiveLec", $ResultElectiveLec, PDO::PARAM_INT);
-      $stmh->bindValue(":ResultElectiveSeminar", $ResultElectiveSeminar, PDO::PARAM_INT);
-      $stmh->bindValue(":ResultElectiveReportExe", $ResultElectiveReportExe, PDO::PARAM_INT);
-      $stmh->bindValue(":ResultElectiveReport", $ResultElectiveReport, PDO::PARAM_INT);
-      $stmh->bindValue(":Resultsport", $Resultsport, PDO::PARAM_INT);
-      $stmh->bindValue(":ResultRele", $ResultRele, PDO::PARAM_INT);
-      $stmh->execute();
-var_dump($stmh);
+      $stmhE = $pdo->prepare($sqlE);
+  		$stmhE->bindValue(":name", "$Str_Name");
+      $stmhE->bindValue(":langMajor", $langMajor, PDO::PARAM_INT);
+      $stmhE->bindValue(":langOther", $langOther, PDO::PARAM_INT);
+      $stmhE->bindValue(":langC", $langC, PDO::PARAM_INT);
+      $stmhE->bindValue(":langEng", $langEng, PDO::PARAM_INT);
+      $stmhE->bindValue(":AreaBasis", $AreaBasis, PDO::PARAM_INT);
+      $stmhE->bindValue(":ReportBasis", $ReportBasis, PDO::PARAM_INT);
+      $stmhE->bindValue(":LiteracyBasis", $LiteracyBasis, PDO::PARAM_INT);
+      $stmhE->bindValue(":ResultlaA", $ResultlaA, PDO::PARAM_INT);
+      $stmhE->bindValue(":ResultlaB", $ResultlaB, PDO::PARAM_INT);
+      $stmhE->bindValue(":ResultlaC", $ResultlaC, PDO::PARAM_INT);
+      $stmhE->bindValue(":ResultIntro", $ResultIntro, PDO::PARAM_INT);
+      $stmhE->bindValue(":ResultIntro2", $ResultIntro2, PDO::PARAM_INT);
+      $stmhE->bindValue(":ResultElectiveLec", $ResultElectiveLec, PDO::PARAM_INT);
+      $stmhE->bindValue(":ResultElectiveSeminar", $ResultElectiveSeminar, PDO::PARAM_INT);
+      $stmhE->bindValue(":ResultElectiveReportExe", $ResultElectiveReportExe, PDO::PARAM_INT);
+      $stmhE->bindValue(":ResultElectiveReport", $ResultElectiveReport, PDO::PARAM_INT);
+      $stmhE->bindValue(":Resultsport", $Resultsport, PDO::PARAM_INT);
+      $stmhE->bindValue(":ResultRele", $ResultRele, PDO::PARAM_INT);
+			//$stmhE->bindValue(":id", $Str_Eid, PDO::PARAM_INT);
+      $stmhE->execute();
+//var_dump($stmhE);
 
 }
 
+$sql_display= 'select * from creditN where name =:name';
+$ArrayPDOedit_display = array(':name'=>$Str_Name);
+$stmt_display = $pdo -> prepare($sql_display);
+$stmt_display -> execute($ArrayPDOedit_display );
+
+while($rows6 = $stmt_display->fetch(PDO::FETCH_ASSOC)){
+  echo $rows6['name']. "さんの単位情報を更新します";
   ?>
+	<h3>所属</h3>
   <form action="" method="post">
     <input type="radio" name="faculty" value="国際社会学部">国際社会学部
  <input type="radio" name="faculty" value="言語文化学部">言語文化学部
@@ -237,13 +261,13 @@ var_dump($stmh);
  <h4>言語単位</h4>
    <div id = "StyleReg">
      専攻言語単位数:
-     <input type="number" name="CreditLangMajor"><br />
+     <input type="number" name="CreditLangMajor" value="<?=$rows6['langMajor']?>"><br />
      教養外国語単位数:
-     <input type="number" name="CreditLangOther"><br />
+     <input type="number" name="CreditLangOther" value="<?=$rows6['langOther']?>"><br />
      地域言語c単位数:
-     <input type="number" name="CreditLangAreaC"><br />
+     <input type="number" name="CreditLangAreaC" value="<?=$rows6['langC']?>" ><br />
      GLIP単位数:
-     <input type="number" name="CreditLangEnglish"><br />
+     <input type="number" name="CreditLangEnglish" value="<?=$rows6['langEng']?>"><br />
  </div>
  <div id = "line">
    </div>
@@ -251,11 +275,11 @@ var_dump($stmh);
  <h4>基礎単位</h4>
    <div id = "StyleReg">
      地域基礎単位数:
-     <input type="number" name="CreditAreaBasis"><br />
+     <input type="number" name="CreditAreaBasis" value="<?=$rows6['AreaBasis']?>"><br />
      基礎演習単位数:
-     <input type="number" name="CreditReportBasis"><br />
+     <input type="number" name="CreditReportBasis" value="<?=$rows6['ReportBasis']?>"><br />
      基礎リテラシー単位数:
-     <input type="number" name="CreditLiteracyBasis"><br />
+     <input type="number" name="CreditLiteracyBasis" value="<?=$rows6['LiteracyBasis']?>"><br />
  </div>
  <div id = "line">
    </div>
@@ -263,11 +287,11 @@ var_dump($stmh);
  <h4>世界教養</h4>
    <div id = "StyleReg">
      世界教養区分ア:
-     <input type="number" name="CreditlaA"><br />
+     <input type="number" name="CreditlaA" value="<?=$rows6['ResultlaA']?>"><br />
      世界教養区分イ:
-     <input type="number" name="CreditlaB"><br />
+     <input type="number" name="CreditlaB" value="<?=$rows6['ResultlaB']?>"><br />
      世界教養区分ウ:
-     <input type="number" name="CreditlaC"><br />
+     <input type="number" name="CreditlaC" value="<?=$rows6['ResultlaC']?>"><br />
  </div>
  <div id = "line">
    </div>
@@ -276,17 +300,17 @@ var_dump($stmh);
    <div id = "StyleReg">
 
      導入科目:
-     <input type="number" name="CreditIntro"><br />
+     <input type="number" name="CreditIntro" value="<?=$rows6['ResultIntro']?>"><br />
      概論:
-     <input type="number" name="CreditIntro2"><br />
+     <input type="number" name="CreditIntro2" value="<?=$rows6['ResultIntro2']?>"><br />
      選択科目 講義:
-     <input type="number" name="CreditElectiveLec"><br />
+     <input type="number" name="CreditElectiveLec" value="<?=$rows6['ResultElectiveLec']?>"><br />
      選択科目 ゼミ:
-     <input type="number" name="CreditElectiveSeminar"><br />
+     <input type="number" name="CreditElectiveSeminar" value="<?=$rows6['ResultElectiveSeminar']?>"><br />
      選択科目 卒論演習:
-     <input type="number" name="CreditElectiveReportExe"><br />
+     <input type="number" name="CreditElectiveReportExe" value="<?=$rows6['ResultElectiveReportExe']?>"><br />
      選択科目 卒論:
-     <input type="number" name="CreditElectiveReport"><br />
+     <input type="number" name="CreditElectiveReport" value="<?=$rows6['ResultElectiveReport']?>"><br />
  </div>
  <div id = "line">
    </div>
@@ -294,9 +318,9 @@ var_dump($stmh);
  <h4>他</h4>
    <div id = "StyleReg">
      スポーツ:
-     <input type="number" name="CreditSport"><br />
+     <input type="number" name="Resultsport" value="<?=$rows6['Resultsport']?>"><br />
      関連科目:
-     <input type="number" name="CreditRele"><br />
+     <input type="number" name="ResultRele" value="<?=$rows6['ResultRele']?>"><br />
  </div>
  <div id = "line">
    </div>
@@ -306,11 +330,147 @@ var_dump($stmh);
      <input type="submit" name = "register" value="register" /><br /><br />
      <br />
  </form>
-
+<?php
+//whileループを閉じる
+}
+ ?>
 
   <?
+	//テーブル情報をmysqlより取得
+	$sql = "SELECT * FROM creditN  where name = :name";
+	  $stmh = $pdo->prepare($sql);
+	  $stmh->bindValue(":name", "$Str_Name");
+	  $stmh->execute();
+  //$rows = $stmh->fetchAll();
+
+  //取得した情報をテーブル表示
+	echo "<table>";
+  $ArrayDisplay= array('専攻言語単位数', '教養外国語単位数', '地域言語c単位数', 'GLIP単位数');
+  $NumArrayDisplay = count($ArrayDisplay);
+  //var_dump($NumArrayDisplay);
+
+      echo "<tr>";
+    for ($i=0; $i < $NumArrayDisplay  ; $i++) {
+  	   echo "<td>$ArrayDisplay[$i]</td>";
+      }
+      echo "</tr>";
+
+//var_dump($rows['name']);
+
+    while($rows = $stmh->fetch(PDO::FETCH_ASSOC)){
+      echo "<tr>";
+      echo "<td>". $rows['langMajor']. "</td>";
+      echo "<td>". $rows['langOther']. "</td>";
+      echo "<td>". $rows['langC']. "</td>";
+      echo "<td>". $rows['langEng']. "</td>";
+      echo "</tr>";
+  }
+  echo "</table>";
+
+  $stmh2 = $pdo->prepare($sql);
+  $stmh2->bindValue(":name", "$Str_Name");
+  $stmh2 ->execute();
+
+  echo "<table>";
+  $ArrayDisplay= array('地域基礎単位数', '基礎演習単位数', '基礎リテラシー単位数');
+  $NumArrayDisplay = count($ArrayDisplay);
+  //var_dump($NumArrayDisplay);
+
+      echo "<tr>";
+    for ($i=0; $i < $NumArrayDisplay  ; $i++) {
+       echo "<td>$ArrayDisplay[$i]</td>";
+      }
+      echo "</tr>";
+
+    while($rows2 = $stmh2->fetch(PDO::FETCH_ASSOC)){
+      echo "<tr>";
+      echo "<td>". $rows2['AreaBasis']. "</td>";
+      echo "<td>". $rows2['ReportBasis']. "</td>";
+      echo "<td>". $rows2['LiteracyBasis']. "</td>";
+      echo "</tr>";
+  }
+  echo "</table>";
+
+
+  $stmh3 = $pdo->prepare($sql);
+    $stmh3->bindValue(":name", "$Str_Name");
+  $stmh3 ->execute();
+
+  echo "<table>";
+  $ArrayDisplay= array('世界教養区分ア', '世界教養区分イ', '世界教養区分ウ');
+  $NumArrayDisplay = count($ArrayDisplay);
+  //var_dump($NumArrayDisplay);
+
+      echo "<tr>";
+    for ($i=0; $i < $NumArrayDisplay  ; $i++) {
+       echo "<td>$ArrayDisplay[$i]</td>";
+      }
+      echo "</tr>";
+
+
+
+    while($rows3 = $stmh3->fetch(PDO::FETCH_ASSOC)){
+      echo "<tr>";
+      echo "<td>". $rows3['ResultlaA']. "</td>";
+      echo "<td>". $rows3['ResultlaB']. "</td>";
+      echo "<td>". $rows3['ResultlaC']. "</td>";
+      echo "</tr>";
+  }
+  echo "</table>";
+
+  $stmh4 = $pdo->prepare($sql);
+  $stmh4->bindValue(":name", "$Str_Name");
+  $stmh4 ->execute();
+
+
+  echo "<table>";
+  $ArrayDisplay= array('導入科目', '概論', '選択科目 講義', '選択科目 ゼミ', '選択科目 卒論演習', '選択科目 卒論');
+  $NumArrayDisplay = count($ArrayDisplay);
+  //var_dump($NumArrayDisplay);
+
+      echo "<tr>";
+    for ($i=0; $i < $NumArrayDisplay  ; $i++) {
+       echo "<td>$ArrayDisplay[$i]</td>";
+      }
+      echo "</tr>";
+
+    while($rows4 = $stmh4->fetch(PDO::FETCH_ASSOC)){
+      echo "<tr>";
+      echo "<td>". $rows4['ResultIntro']. "</td>";
+      echo "<td>". $rows4['ResultIntro2']. "</td>";
+      echo "<td>". $rows4['ResultElectiveLec']. "</td>";
+      echo "<td>". $rows4['ResultElectiveSeminar']. "</td>";
+      echo "<td>". $rows4['ResultElectiveReportExe']. "</td>";
+      echo "<td>". $rows4['ResultElectiveReport']. "</td>";
+      echo "</tr>";
+  }
+  echo "</table>";
+
+  $stmh5 = $pdo->prepare($sql);
+  $stmh5->bindValue(":name", "$Str_Name");
+  $stmh5 ->execute();
+
+  echo "<table>";
+  $ArrayDisplay= array('スポーツ', '関連科目');
+  $NumArrayDisplay = count($ArrayDisplay);
+  //var_dump($NumArrayDisplay);
+
+      echo "<tr>";
+    for ($i=0; $i < $NumArrayDisplay  ; $i++) {
+       echo "<td>$ArrayDisplay[$i]</td>";
+      }
+      echo "</tr>";
+
+    while($rows5 = $stmh5->fetch(PDO::FETCH_ASSOC)){
+      echo "<tr>";
+      echo "<td>". $rows5['Resultsport']. "</td>";
+      echo "<td>". $rows5['ResultRele']. "</td>";
+      echo "</tr>";
+  }
+  echo "</table>";
+
   }else {
-    header("Location: login_manage_20171202.php");
+    header("Location: login_manage_20171222.php");
     exit();
   }
   ?>

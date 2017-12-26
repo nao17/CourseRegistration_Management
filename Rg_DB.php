@@ -1,17 +1,22 @@
 <?php
 session_start();
 if (isset($_SESSION["NAME"])) {
-	echo "ログイン中です。";
+	$Str_Name = $_SESSION["NAME"];
+	echo '<table>';
+	echo '<td>';
+	echo '<th>'. htmlspecialchars($_SESSION["NAME"], ENT_QUOTES). 'さんとしてログインしています。</th>';
+	echo '<th><a href="main.php">マイページ</a></th>';
+	echo '</td>';
+	echo '</table>';
 ?>
 <html>
 <head>
-<title>reimbursement form</title>
-<link rel="stylesheet" type="text/css" href="display_style.css">
+<title>course registration manager</title>
+<link rel="stylesheet" type="text/css" href="CourseRegi_Style_20171004.css">
 <meta http-equiv="content-type" charset="utf-8">
 </head>
 <header>
-	<h1>BBS</h1>
-  		<p><u><?php echo htmlspecialchars($_SESSION["NAME"], ENT_QUOTES); ?></u>さんとしてログインしています。</p>
+	<h1>登録画面</h1>
   </header>
   <?php
 if (isset($_POST["register"])){
@@ -164,7 +169,7 @@ var_dump($stmh);
 
   <?
   }else {
-    header("Location: login_manage_20171202.php");
+    header("Location: login_manage_20171222.php");
     exit();
   }
   ?>
