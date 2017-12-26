@@ -25,7 +25,7 @@ $_SESSION = array();
         <div><?php echo htmlspecialchars($errorMessage, ENT_QUOTES); ?></div>
 
         <ul>
-            <li><a href="login_manage_20171202.php" >ログイン画面に戻る</a></li>
+            <li><a href="login_manage_20171222.php" >ログイン画面に戻る</a></li>
         </ul>
     </body>
 </html>

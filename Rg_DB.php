@@ -167,7 +167,18 @@ var_dump($stmh);
  </form>
 
 
-  <?
+ <table>
+ 	<tr>
+ 	<td>ログアウト</td>
+ 	<td>	<a href="logout_20171202.php">ログアウトする</a></td>
+ 	</tr>
+ 	<tr>
+ 	<td>マイページ</td>
+ 	<td>	<a href="main.php">マイページに戻る</a></td>
+ 	</tr>
+ </table>
+ <?
+
   }else {
     header("Location: login_manage_20171222.php");
     exit();

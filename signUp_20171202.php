@@ -56,7 +56,7 @@ if ($s_password == $s_password2) {
       $stmh = $pdo->prepare($sql);
       //型に中身を入れる
       $stmh->execute($ArrayPDOpass);
-      echo "あなたのuserIDは". $s_username. "です。またパスワードは". $s_password. "です。";
+      echo "あなたのuserIDは". $s_username. "です。";
       echo '<a href="login_manage_20171222.php">ログインフォーム</a>からログインしてください。';
       ?>
 

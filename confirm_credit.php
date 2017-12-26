@@ -207,7 +207,7 @@ $sql = "SELECT * FROM creditN  where name = :name";
   <?php
   $langNeed = $requirelang - $langTotal;
 
-  echo "<h3>言語科目</h3>"; 
+  echo "<h3>言語科目</h3>";
 
     echo "<tr>";
     echo "<th>". "登録した言語科目". "</th>";
@@ -531,9 +531,19 @@ $sql = "SELECT * FROM creditN  where name = :name";
       echo "</tr>";
   }
   echo "</table>";
+  echo'</br></br></br></br></br>';
   ?>
+  <table>
+  	<tr>
+  	<td>ログアウト</td>
+  	<td>	<a href="logout_20171202.php">ログアウトする</a></td>
+  	</tr>
+  	<tr>
+  	<td>マイページ</td>
+  	<td>	<a href="main.php">マイページに戻る</a></td>
+  	</tr>
+  </table>
   <?
-
   }else {
   	header("Location: login_manage_20171202.php");
   	exit();

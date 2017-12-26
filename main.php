@@ -24,17 +24,27 @@ if (isset($_SESSION["NAME"])) {
 <table>
 	<tr>
 	<td>Register</td>
-	<td><a href="Rg_DB.php">登録する</a> / <a href="edit_DB.php">編集する</a></td>
+		<td>
+			取得単位を<a href="Rg_DB.php">登録する</a> </br>
+			取得単位を<a href="edit_DB.php">編集する</a> </br>
+		</td>
 	</tr>
-	<tr>
-	<td>Plan</td>
-	<td><a href="plan.php">目標を立てる</a> / <a href="plan_new.php">目標を更新する</a></td>
-	</tr>
+		<tr>
+			<td>Plan</td>
+				<td>
+					<a href="plan_new.php">目標を立てる</a> </br>
+					<a href="plan.php">目標を更新する</a>(設定した目標もこちらから確認できます) </br>
+				</td>
+		</tr>
 	<tr>
 		<td>Confirm</td>
-	<td><a href="confirm_credit.php">累計取得数を確認する</a></td>
+	<td>
+		<a href="confirm_credit.php">累計取得数を確認する</a> </br>
+	</td>
 </tr>
-<table>
+</table>
+
+
 </body>
 <?
 
@@ -123,6 +133,81 @@ $CreditTotal = $langTotal + $laTotal + $BasisTotal + $EleTotal + $ETCTotal;
 ?>
 <h2>取得している単位数:<?  echo "$CreditTotal";?></h2>
 
+<?
+require_once('cfg2.php');
+$sqlP2 = "SELECT * FROM creditP2  where name = :name";
+
+$stmhP2 = $pdo->prepare($sqlP2);
+$stmhP2->bindValue(":name", "$Str_Name");
+$stmhP2 ->execute();
+
+while($rowsP2 = $stmhP2->fetch(PDO::FETCH_ASSOC)){
+//登録された単位数を格納する
+$YearTP2 = $rowsP2['YearT'];
+$termTP2 = $rowsP2['termT'];
+
+$langMajorP2 = $rowsP2['langMajor'];
+$langOtherP2 = $rowsP2['langOther'];
+$langCP2 = $rowsP2['langC'];
+$langEngP2 = $rowsP2['langEng'];
+
+$AreaBasisP2 = $rowsP2['AreaBasis'];
+$ReportBasisP2 = $rowsP2['ReportBasis'];
+$LiteracyBasisP2 = $rowsP2['LiteracyBasis'];
+
+$ResultlaAP2 = $rowsP2['ResultlaA'];
+$ResultlaBP2 = $rowsP2['ResultlaB'];
+$ResultlaCP2 = $rowsP2['ResultlaC'];
+
+$ResultIntroP2 = $rowsP2['ResultIntro'];
+$ResultIntro2P2 = $rowsP2['ResultIntro2'];
+$ResultElectiveLecP2 = $rowsP2['ResultElectiveLec'];
+$ResultElectiveSeminarP2 = $rowsP2['ResultElectiveSeminar'];
+$ResultElectiveReportExeP2 = $rowsP2['ResultElectiveReportExe'];
+$ResultElectiveReportP2 = $rowsP2['ResultElectiveReport'];
+
+$ResultsportP2 = $rowsP2['Resultsport'];
+$ResultReleP2 = $rowsP2['ResultRele'];
+}
+	$CreditlangArrayP2 = array($langMajorP2, $langOtherP2, $langCP2, $langEngP2);
+	$CreditBasisArrayP2 = array($AreaBasisP2, $ReportBasisP2, $LiteracyBasisP2);
+	$CreditLaArrayP2 = array($ResultlaAP2, $ResultlaBP2, $ResultlaCP2);
+	$CreditEleArrayP2 = array($ResultIntroP2, $ResultIntro2P2, $ResultElectiveLecP2, $ResultElectiveSeminarP2, $ResultElectiveReportExeP2, $ResultElectiveReportP2);
+	$CreditETCArrayP2 = array($ResultsportP2, $ResultReleP2);
+
+		$CreditlangTotalP2  = array_sum($CreditlangArrayP2);
+		$CreditBasisTotalP2 = array_sum($CreditBasisArrayP2);
+		$CreditLaTotalP2 = array_sum(	$CreditLaArrayP2);
+		$CreditEleTotalP2 = array_sum($CreditEleArrayP2);
+		$CreditETCTotalP2 = array_sum($CreditETCArrayP2);
+
+			if ($termTP2 == "spring"){
+				$termTP2 = "春";
+			}
+			if ($termTP2 == "summer"){
+				$termTP2 = "夏";
+			}
+			if ($termTP2 == "fall"){
+				$termTP2 = "秋";
+			}
+			if ($termTP2 == "winter"){
+				$termTP2 = "冬";
+			}
+
+			$CreditTotalP2 = $CreditlangTotalP2 + $CreditBasisTotalP2 + $CreditLaTotalP2 + $CreditEleTotalP2 + $CreditETCTotalP2;
+				echo '<h3>'. $YearTP2. "年".  $termTP2. "学期". "において";
+				echo $CreditTotalP2. "単位の取得を目標としています。". '</h3>';
+?>
+<table>
+	<tr>
+	<td>ログアウト</td>
+	<td>	<a href="logout_20171202.php">ログアウトする</a></td>
+	</tr>
+	<tr>
+	<td>マイページ</td>
+	<td>	<a href="main.php">マイページに戻る</a></td>
+	</tr>
+</table>
 <?
 		}else {
 			header("Location: login_manage_20171202.php");
