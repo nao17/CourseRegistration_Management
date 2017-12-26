@@ -24,11 +24,11 @@ if (isset($_SESSION["NAME"])) {
 <table>
 	<tr>
 	<td>Register</td>
-	<td><a href="Rg_DB.php">登録する</a>/<a href="edit_DB.php">編集する</a></td>
+	<td><a href="Rg_DB.php">登録する</a> / <a href="edit_DB.php">編集する</a></td>
 	</tr>
 	<tr>
 	<td>Plan</td>
-	<td><a href="CourseRegistration_Manage_20170930.php">計算する</a></td>
+	<td><a href="plan.php">目標を立てる</a> / <a href="plan_new.php">目標を更新する</a></td>
 	</tr>
 	<tr>
 		<td>Confirm</td>
