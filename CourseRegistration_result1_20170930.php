@@ -1,3 +1,8 @@
+<?php
+session_start();
+if (isset($_SESSION["NAME"])) {
+	echo "ログイン中です。";
+?>
 <!DOCTYPE html>
 <html lang="ja">
   <head>
@@ -5,6 +10,10 @@
 <title>"取得単位管理システム"</title>
 <link rel="stylesheet" href="CourseRegi_Style_20171004.css">
 </head>
+<header>
+   <h1>BBS</h1>
+    <p><u><?php echo htmlspecialchars($_SESSION["NAME"], ENT_QUOTES); ?></u>さんとしてログインしています。</p>
+</header>
 <body>
   <h1>累計取得した単位数・今後必要な単位数を表示します</h1>
 <?php
@@ -459,3 +468,12 @@ for ($i=0; $i < $cntIntroEle; $i++) {
 
 </body>
 </html>
+
+<?
+
+		}else {
+			header("Location: login_manage_20171222.php");
+			exit();
+
+		}
+		?>
